@@ -61,6 +61,16 @@ SSRF scanner
 Report generator (PDF/HTML)
 
 # OUTPUTS
+![Image](https://github.com/user-attachments/assets/9d0f3992-4a4e-4f42-8a2e-e4eeeee8986c)
 
+![Image](https://github.com/user-attachments/assets/a4f89281-6d4f-48b1-8fc6-8e521e81a56c)
+
+![Image](https://github.com/user-attachments/assets/9054034d-4622-4d31-be0c-599763426cbd)
+
+![Image](https://github.com/user-attachments/assets/97fb6b24-c28d-419b-8ed3-0e31431daf7c)
+
+![Image](https://github.com/user-attachments/assets/29942fac-4658-4950-afb4-983cb9a91fc0)
+
+![Image](https://github.com/user-attachments/assets/bbc99c5c-bfb7-4efc-95fe-8982d8dd4839)
 
 
