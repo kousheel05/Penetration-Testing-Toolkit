@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Penetration Testing Toolkit</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Penetration Testing Toolkit</h1>
+
+    <h2>Port Scanner</h2>
+    <form method="POST" action="/scan">
+        Host: <input name="host" required>
+        Start Port: <input name="start_port" type="number" required>
+        End Port: <input name="end_port" type="number" required>
+        <button type="submit">Scan</button>
+    </form>
+    {% if port_results %}
+        <h3>Open Ports:</h3>
+        <ul>
+        {% for port in port_results %}
+            <li>Port {{ port }} is open</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>Brute Force</h2>
+    <form method="POST" action="/brute">
+        Target: <input name="target" required>
+        Usernames (comma separated): <input name="usernames" required>
+        Passwords (comma separated): <input name="passwords" required>
+        <button type="submit">Attack</button>
+    </form>
+    {% if brute_results %}
+        <h3>Brute Force Results:</h3>
+        <ul>
+        {% for result in brute_results %}
+            <li>{{ result.username }} : {{ result.password }} - 
+                {% if result.success %}✅ SUCCESS{% else %}❌ FAIL{% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>Directory Fuzzer</h2>
+<form method="POST" action="/fuzz">
+    Base URL: <input name="base_url" required>
+    Wordlist (comma separated): <input name="wordlist" required>
+    <button type="submit">Fuzz</button>
+</form>
+{% if fuzz_results %}
+    <h3>Fuzzing Results:</h3>
+    <ul>
+    {% for result in fuzz_results %}
+        <li><a href="{{ result.url }}" target="_blank">{{ result.url }}</a> - {{ result.status_code }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<h2>XSS Scanner</h2>
+<form method="POST" action="/xss_scan">
+    URL to scan: <input name="url" required placeholder="http://example.com/page?param=value">
+    <button type="submit">Scan for XSS</button>
+</form>
+
+{% if xss_results %}
+    <h3>XSS Vulnerabilities Found:</h3>
+    <ul>
+    {% for result in xss_results %}
+        <li>
+            Vulnerable URL: <a href="{{ result.url }}" target="_blank">{{ result.url }}</a> <br>
+            Payload: <code>{{ result.payload }}</code>
+        </li>
+    {% endfor %}
+    </ul>
+{% elif xss_results is not none %}
+    <p>No XSS vulnerabilities detected with tested payloads.</p>
+{% endif %}
+
+<h2>WHOIS Lookup</h2>
+<form method="POST" action="/whois">
+    Domain: <input name="domain" required placeholder="example.com">
+    <button type="submit">Lookup</button>
+</form>
+
+{% if whois_result %}
+    {% if whois_result.error %}
+        <p>Error: {{ whois_result.error }}</p>
+    {% else %}
+        <ul>
+            <li><strong>Domain:</strong> {{ whois_result.domain_name }}</li>
+            <li><strong>Registrar:</strong> {{ whois_result.registrar }}</li>
+            <li><strong>Created:</strong> {{ whois_result.creation_date }}</li>
+            <li><strong>Expires:</strong> {{ whois_result.expiration_date }}</li>
+            <li><strong>Nameservers:</strong> {{ whois_result.name_servers }}</li>
+            <li><strong>Email:</strong> {{ whois_result.emails }}</li>
+        </ul>
+    {% endif %}
+{% endif %}
+
+<h2>SQL Injection Tester</h2>
+<form method="POST" action="/sqli">
+    URL to test: <input name="url" required placeholder="http://example.com/page?param=value">
+    <button type="submit">Test SQL Injection</button>
+</form>
+
+{% if sqli_results %}
+    <h3>SQLi Vulnerabilities Found:</h3>
+    <ul>
+    {% for result in sqli_results %}
+        <li>
+            Vulnerable URL: <a href="{{ result.url }}" target="_blank">{{ result.url }}</a><br>
+            Payload: <code>{{ result.payload }}</code>
+        </li>
+    {% endfor %}
+    </ul>
+{% elif sqli_results is not none %}
+    <p>No SQL Injection vulnerabilities found with tested payloads.</p>
+{% endif %}
+</body>
+</html>
